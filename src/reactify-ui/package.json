@@ -1,0 +1,34 @@
+{
+  "name": "reactify-ui",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "moment": "^2.22.2",
+    "react": "^16.4.0",
+    "react-cookies": "^0.1.0",
+    "react-dom": "^16.4.0",
+    "react-router-dom": "^4.2.2",
+    "whatwg-fetch": "^2.0.4"
+  },
+  "devDependencies": {
+    "react-scripts": "1.1.4",
+    "copyfiles": "^2.0.0",
+    "renamer": "^0.7.0"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test --env=jsdom",
+    "eject": "react-scripts eject",
+    "collect": "react-scripts build && npm run build-rename && npm run copy-buildfiles && npm run collectstatic",
+    "build-rename": "npm run build-rename-js && npm run build-rename-css && npm run build-rename-logo",
+    "build-rename-logo": "renamer --regex --find '([^\\.])\\.[^\\.]+\\.(\\w+)' --replace '$1.$2' build/static/media/*",
+    "build-rename-js": "renamer --regex --find 'main\\.[^\\.]+\\.js' --replace 'reactify-django.ui.js' build/static/js/*.js",
+    "build-rename-css": "renamer --regex --find 'main\\.[^\\.]+\\.css' --replace 'reactify-django.ui.css' build/static/css/*.css",
+    "copy-buildfiles": "npm run copy-build-js && npm run copy-build-css && npm run copy-build-logo",
+    "copy-build-logo": "copyfiles -f 'build/static/media/*' '../staticfiles/img/'",
+    "copy-build-js": "copyfiles -f 'build/static/js/*.js' '../staticfiles/js/'",
+    "copy-build-css": "copyfiles -f 'build/static/css/*.css' '../staticfiles/css/'",
+    "collectstatic": "python ../manage.py collectstatic --no-input"
+  }
+}
